@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace Generics.BinaryTrees
 {
-
-
     public class BinaryTree<T> : IEnumerable
         where T:IComparable
     {
-        public BinaryTree<T> Parent { get; set; }
         public BinaryTree<T> Left { get; set; }
         public BinaryTree<T> Right { get; set; }
         public T Value { get; set; }
+        private bool DoesNotHaveValue = true;
+
 
         public IEnumerator GetEnumerator()
         {
@@ -24,35 +23,45 @@ namespace Generics.BinaryTrees
         
         public void Add(T value)
         {
-            if (Parent == null)
+            if (DoesNotHaveValue)
             {
-                this.Parent = new BinaryTree<T>();
                 this.Value = value;
+                DoesNotHaveValue = false;
+                Left = new BinaryTree<T>();
+                Right = new BinaryTree<T>();
             }
-            if(value.CompareTo(this.Value) == 1)
+            else
             {
-                Insert(value, Right, this);
+                if (value.CompareTo(this.Value) == 1)
+                {
+                    Insert(value, Right);
+                }
+                if (value.CompareTo(this.Value) == -1)
+                {
+                    Insert(value, Left);
+                }
             }
-            if (value.CompareTo(this.Value) == -1)
-            {
-                Insert(value, Left, this);
-            }
+
 
         }
 
-        private void Insert(T value, BinaryTree<T> currentNode, BinaryTree<T> parent)
+        private void Insert(T value, BinaryTree<T> currentNode)
         {
-            if (currentNode == null || currentNode.Value.CompareTo(value) == 0)
+            if (currentNode.DoesNotHaveValue)
             {
                 currentNode = new BinaryTree<T>();
-                currentNode.Parent = parent;
                 currentNode.Value = value;
+                DoesNotHaveValue = false;
             }
-            if (currentNode.Value.CompareTo(value) == 1)
-                Insert(value, currentNode.Right, currentNode);
-            
-            else if (currentNode.Value.CompareTo(value) == -1)
-                Insert(value, currentNode.Left, currentNode);
+            else
+            {
+                if (currentNode.Value.CompareTo(value) == 1)
+                    Insert(value, currentNode.Right);
+
+                else if (currentNode.Value.CompareTo(value) == -1)
+                    Insert(value, currentNode.Left);
+            }
+
         }
     }
 }
