@@ -10,11 +10,38 @@ namespace Generics.BinaryTrees
     public class BinaryTree<T> : IEnumerable
         where T:IComparable
     {
-        public BinaryTree<T> Left { get; set; }
-        public BinaryTree<T> Right { get; set; }
+        private BinaryTree<T> left;
+
+        public BinaryTree<T> Left
+        {
+            get {
+                    if (left == null)
+                    {
+                        left = new BinaryTree<T>();
+                    }
+                    return left;
+                }
+            set { left = value; }
+        }
+
+        private BinaryTree<T> right { get; set; }
+
+        public BinaryTree<T> Right
+        { 
+            get
+            {
+                if (right == null)
+                {
+                    right = new BinaryTree<T>();
+                }
+                return right;
+            }
+            set { right = value; }
+        }
+
         public T Value { get; set; }
         private bool DoesNotHaveValue = true;
-
+     
 
         public IEnumerator GetEnumerator()
         {
@@ -27,8 +54,7 @@ namespace Generics.BinaryTrees
             {
                 this.Value = value;
                 DoesNotHaveValue = false;
-                Left = new BinaryTree<T>();
-                Right = new BinaryTree<T>();
+                return;
             }
             else
             {
@@ -36,7 +62,7 @@ namespace Generics.BinaryTrees
                 {
                     Insert(value, Right);
                 }
-                if (value.CompareTo(this.Value) == -1)
+                else if ((value.CompareTo(this.Value) == -1))
                 {
                     Insert(value, Left);
                 }
@@ -49,19 +75,25 @@ namespace Generics.BinaryTrees
         {
             if (currentNode.DoesNotHaveValue)
             {
-                currentNode = new BinaryTree<T>();
                 currentNode.Value = value;
-                DoesNotHaveValue = false;
+                currentNode.DoesNotHaveValue = false;
+                return;
             }
-            else
+
+            int comparisonValue = value.CompareTo(currentNode.Value);
+            if (comparisonValue == 1)
             {
-                if (currentNode.Value.CompareTo(value) == 1)
-                    Insert(value, currentNode.Right);
-
-                else if (currentNode.Value.CompareTo(value) == -1)
-                    Insert(value, currentNode.Left);
+                //if (currentNode.Right == null)
+                //    currentNode.Right= new BinaryTree<T>();
+                Insert(value, currentNode.Right);
             }
-
+            else if (comparisonValue == -1)
+            {
+                //if (currentNode.Left == null)
+                //    currentNode.Left = new BinaryTree<T>();
+                Insert(value, currentNode.Left);
+            }
+            
         }
     }
 }

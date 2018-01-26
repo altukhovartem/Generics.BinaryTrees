@@ -9,11 +9,14 @@ class Program
 	{
         BinaryTree<int> x = new BinaryTree<int>();
         x.Add(10);
-        x.Add(5);
         x.Add(15);
+        x.Add(25);
+        x.Add(7);
+        x.Add(6);
+
         System.Console.WriteLine(x.Value);
         System.Console.WriteLine(x.Right.Value);
-        System.Console.WriteLine(x.Left.Value);
+        System.Console.WriteLine(x.Right.Right.Value);
             
         new AutoRun().Execute(args);
 
