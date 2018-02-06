@@ -14,9 +14,13 @@ class Program
         x.Add(7);
         x.Add(6);
 
-        System.Console.WriteLine(x.Value);
-        System.Console.WriteLine(x.Right.Value);
-        System.Console.WriteLine(x.Right.Right.Value);
+        foreach (BinaryTree<int> item in x)
+        {
+            System.Console.WriteLine(item.Value);
+        }
+
+        //BinaryTree<int> tree = BinaryTree.Create(new[] { 100,  });
+        
             
         new AutoRun().Execute(args);
 

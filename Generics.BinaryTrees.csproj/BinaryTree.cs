@@ -24,7 +24,7 @@ namespace Generics.BinaryTrees
             set { left = value; }
         }
 
-        private BinaryTree<T> right { get; set; }
+        private BinaryTree<T> right;
 
         public BinaryTree<T> Right
         { 
@@ -40,20 +40,55 @@ namespace Generics.BinaryTrees
         }
 
         public T Value { get; set; }
-        private bool DoesNotHaveValue = true;
+        private bool HasValue = false;
      
 
         public IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            Stack<BinaryTree<T>> stack = new Stack<BinaryTree<T>>();
+            BinaryTree<T> currentNode = this;
+            bool hasLeft = true;
+
+            stack.Push(currentNode);
+            while(true)
+            {
+                while (hasLeft)
+                {
+                    if (currentNode.Left.HasValue)
+                    {
+                        currentNode = currentNode.Left;
+                        stack.Push(currentNode);
+                    }
+                    else
+                    {
+                        hasLeft = false;
+                    }
+                }
+                
+                if (currentNode.Right.HasValue)
+                {
+                    currentNode = currentNode.Right;
+                    hasLeft = true;
+                }
+                else
+                {
+                    currentNode = stack.Pop();
+                    yield return currentNode;
+                }
+            }
         }
+
+
+            
+         
+        
         
         public void Add(T value)
         {
-            if (DoesNotHaveValue)
+            if (HasValue == false)
             {
                 this.Value = value;
-                DoesNotHaveValue = false;
+                HasValue = true;
                 return;
             }
             else
@@ -67,35 +102,43 @@ namespace Generics.BinaryTrees
                     Insert(value, Left);
                 }
             }
-
-
         }
 
         private void Insert(T value, BinaryTree<T> currentNode)
         {
-            if (currentNode.DoesNotHaveValue)
+            if (currentNode.HasValue == false)
             {
                 currentNode.Value = value;
-                currentNode.DoesNotHaveValue = false;
+                currentNode.HasValue = true;
                 return;
             }
 
             int comparisonValue = value.CompareTo(currentNode.Value);
             if (comparisonValue == 1)
             {
-                //if (currentNode.Right == null)
-                //    currentNode.Right= new BinaryTree<T>();
                 Insert(value, currentNode.Right);
             }
             else if (comparisonValue == -1)
             {
-                //if (currentNode.Left == null)
-                //    currentNode.Left = new BinaryTree<T>();
                 Insert(value, currentNode.Left);
             }
             
         }
     }
+
+    public static class BinaryTree
+    {
+        public static BinaryTree<int> Create(params int[] items)
+        {
+            BinaryTree<int> binaryTree = new BinaryTree<int>();
+            for (int i = 0; i < items.Length; i++)
+            {
+                binaryTree.Add(items[i]);
+            }
+            return binaryTree;
+        }
+    }
+
 }
 
 
