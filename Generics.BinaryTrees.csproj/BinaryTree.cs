@@ -68,12 +68,13 @@ namespace Generics.BinaryTrees
                 if (currentNode.Right.HasValue)
                 {
                     currentNode = currentNode.Right;
+                    stack.Push(currentNode);
                     hasLeft = true;
                 }
                 else
                 {
-                    currentNode = stack.Pop();
-                    yield return currentNode;
+                    yield return stack.Pop();
+                    currentNode = stack.Peek();
                 }
             }
         }

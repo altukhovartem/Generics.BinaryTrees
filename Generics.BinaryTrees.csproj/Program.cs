@@ -11,8 +11,9 @@ class Program
         x.Add(10);
         x.Add(15);
         x.Add(25);
-        x.Add(7);
+        x.Add(8);
         x.Add(6);
+        x.Add(7);
 
         foreach (BinaryTree<int> item in x)
         {
