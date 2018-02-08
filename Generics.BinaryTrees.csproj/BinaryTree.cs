@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+/// <summary>
+/// нода дерева должна реализовывать интерфейс IEnumerable
+/// едиснтвенный метод этого интерфейса это GetEnumerator
+/// тебе надо написать класс, который в конструкторе принимает ноду дерева, которую попросили перечислиться, и который реализует интерфейс IEnumerator
+/// вспоминай во что превращается форыч и что это за интерфейсы
+/// держи в голове что нода выполняет сразу две роли
+/// она и носитель значения, и корень какого то поддерева
+/// IEnumerable - то что можно перечислить, IEnumerator - то что умеет что-то перечислять
+/// </summary>
 
 namespace Generics.BinaryTrees
 {
-    public class BinaryTree<T> : IEnumerable
+    public class BinaryTree<T> : IEnumerable<T>
         where T:IComparable
     {
         private BinaryTree<T> left;
-
         public BinaryTree<T> Left
         {
             get {
@@ -23,9 +29,7 @@ namespace Generics.BinaryTrees
                 }
             set { left = value; }
         }
-
         private BinaryTree<T> right;
-
         public BinaryTree<T> Right
         { 
             get
@@ -41,49 +45,58 @@ namespace Generics.BinaryTrees
 
         public T Value { get; set; }
         private bool HasValue = false;
-     
 
-        public IEnumerator GetEnumerator()
+        //public IEnumerator<T> GetEnumerator()
+        //{
+        //    Stack<BinaryTree<T>> stack = new Stack<BinaryTree<T>>();
+        //    BinaryTree<T> currentNode = this;
+        //    bool hasLeft = true;
+
+        //    stack.Push(currentNode);
+        //    while (true)
+        //    {
+        //        while (hasLeft)
+        //        {
+        //            if (currentNode.Left.HasValue)
+        //            {
+        //                currentNode = currentNode.Left;
+        //                stack.Push(currentNode);
+        //            }
+        //            else
+        //            {
+        //                hasLeft = false;
+        //            }
+        //        }
+
+        //        if (currentNode.Right.HasValue)
+        //        {
+        //            currentNode = currentNode.Right;
+        //            stack.Push(currentNode);
+        //            hasLeft = true;
+        //        }
+        //        else
+        //        {
+        //            yield return currentNode.Value;
+        //            currentNode = stack.Peek();
+        //        }
+        //    }
+        //}
+
+        public IEnumerator<T> GetEnumerator()
         {
-            Stack<BinaryTree<T>> stack = new Stack<BinaryTree<T>>();
-            BinaryTree<T> currentNode = this;
-            bool hasLeft = true;
+            return new BinaryTreeEnumerator<T>(this);
+        }
 
-            stack.Push(currentNode);
-            while(true)
-            {
-                while (hasLeft)
-                {
-                    if (currentNode.Left.HasValue)
-                    {
-                        currentNode = currentNode.Left;
-                        stack.Push(currentNode);
-                    }
-                    else
-                    {
-                        hasLeft = false;
-                    }
-                }
-                
-                if (currentNode.Right.HasValue)
-                {
-                    currentNode = currentNode.Right;
-                    stack.Push(currentNode);
-                    hasLeft = true;
-                }
-                else
-                {
-                    yield return stack.Pop();
-                    currentNode = stack.Peek();
-                }
-            }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
 
-            
-         
-        
-        
+
+
+
+
         public void Add(T value)
         {
             if (HasValue == false)
@@ -125,6 +138,8 @@ namespace Generics.BinaryTrees
             }
             
         }
+
+      
     }
 
     public static class BinaryTree
