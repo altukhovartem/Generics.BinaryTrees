@@ -10,21 +10,18 @@ namespace Generics.BinaryTrees
     class BinaryTreeEnumerator<T> : IEnumerator<T> 
         where T : IComparable
     {
-        public T Current => Head.Value;
         object IEnumerator.Current => Current;
-
-        public BinaryTree<T> Head { get; set; }
+        public T Current => new BinaryTree<T>().Value;
 
         public BinaryTreeEnumerator(BinaryTree<T> node)
         {
             if (node == null)
                 throw new Exception();
-            Head = node;
         }
 
         public bool MoveNext()
         {
-            
+            throw new NotImplementedException();
         }
 
         public void Reset()

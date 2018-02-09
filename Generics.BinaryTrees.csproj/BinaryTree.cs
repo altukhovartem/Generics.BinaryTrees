@@ -45,6 +45,7 @@ namespace Generics.BinaryTrees
 
         public T Value { get; set; }
         private bool HasValue = false;
+        public bool SuperHasValue { get { return HasValue; } set { HasValue = value; } }
 
         //public IEnumerator<T> GetEnumerator()
         //{
@@ -82,20 +83,30 @@ namespace Generics.BinaryTrees
         //    }
         //}
 
+        public IEnumerator<T> GoAroundTheTree(BinaryTree<T> currentTree)
+        {
+            if (currentTree.Left.SuperHasValue == true)
+            {
+                GoAroundTheTree(currentTree.Left);
+            }
+
+            else if (currentTree.Right.SuperHasValue == true)
+            {
+                GoAroundTheTree(currentTree.Right);
+            }
+
+            yield return currentTree.Value;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
-            return new BinaryTreeEnumerator<T>(this);
+            GoAroundTheTree(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-
-
-
-
-
 
         public void Add(T value)
         {
