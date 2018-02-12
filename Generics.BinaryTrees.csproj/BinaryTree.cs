@@ -43,6 +43,8 @@ namespace Generics.BinaryTrees
             set { right = value; }
         }
 
+        public BinaryTree<T> Parent { get; set; }
+
         public T Value { get; set; }
         private bool HasValue = false;
         public bool SuperHasValue { get { return HasValue; } set { HasValue = value; } }
