@@ -49,42 +49,6 @@ namespace Generics.BinaryTrees
         private bool HasValue = false;
         public bool SuperHasValue { get { return HasValue; } set { HasValue = value; } }
 
-        //public IEnumerator<T> GetEnumerator()
-        //{
-        //    Stack<BinaryTree<T>> stack = new Stack<BinaryTree<T>>();
-        //    BinaryTree<T> currentNode = this;
-        //    bool hasLeft = true;
-
-        //    stack.Push(currentNode);
-        //    while (true)
-        //    {
-        //        while (hasLeft)
-        //        {
-        //            if (currentNode.Left.HasValue)
-        //            {
-        //                currentNode = currentNode.Left;
-        //                stack.Push(currentNode);
-        //            }
-        //            else
-        //            {
-        //                hasLeft = false;
-        //            }
-        //        }
-
-        //        if (currentNode.Right.HasValue)
-        //        {
-        //            currentNode = currentNode.Right;
-        //            stack.Push(currentNode);
-        //            hasLeft = true;
-        //        }
-        //        else
-        //        {
-        //            yield return currentNode.Value;
-        //            currentNode = stack.Peek();
-        //        }
-        //    }
-        //}
-
         public IEnumerator<T> GoAroundTheTree(BinaryTree<T> currentTree)
         {
             if (currentTree.Left.SuperHasValue == true)
