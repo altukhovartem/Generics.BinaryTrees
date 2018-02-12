@@ -44,7 +44,6 @@ namespace Generics.BinaryTrees
         }
 
         public BinaryTree<T> Parent { get; set; }
-
         public T Value { get; set; }
         private bool HasValue = false;
         public bool SuperHasValue { get { return HasValue; } set { HasValue = value; } }
@@ -70,26 +69,28 @@ namespace Generics.BinaryTrees
             {
                 this.Value = value;
                 HasValue = true;
+                Parent = null;
                 return;
             }
             else
             {
                 if (value.CompareTo(this.Value) == 1)
                 {
-                    Insert(value, Right);
+                    Insert(value, Right, this);
                 }
                 else if ((value.CompareTo(this.Value) == -1))
                 {
-                    Insert(value, Left);
+                    Insert(value, Left, this);
                 }
             }
         }
 
-        private void Insert(T value, BinaryTree<T> currentNode)
+        private void Insert(T value, BinaryTree<T> currentNode, BinaryTree<T> parent)
         {
             if (currentNode.HasValue == false)
             {
                 currentNode.Value = value;
+                currentNode.Parent = parent;
                 currentNode.HasValue = true;
                 return;
             }
@@ -97,11 +98,11 @@ namespace Generics.BinaryTrees
             int comparisonValue = value.CompareTo(currentNode.Value);
             if (comparisonValue == 1)
             {
-                Insert(value, currentNode.Right);
+                Insert(value, currentNode.Right, currentNode);
             }
             else if (comparisonValue == -1)
             {
-                Insert(value, currentNode.Left);
+                Insert(value, currentNode.Left, currentNode);
             }
             
         }
