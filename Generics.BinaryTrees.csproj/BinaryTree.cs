@@ -51,22 +51,12 @@ namespace Generics.BinaryTrees
 
         public IEnumerator<T> GoAroundTheTree(BinaryTree<T> currentTree)
         {
-            if (currentTree.Left.SuperHasValue == true)
-            {
-                GoAroundTheTree(currentTree.Left);
-            }
-
-            else if (currentTree.Right.SuperHasValue == true)
-            {
-                GoAroundTheTree(currentTree.Right);
-            }
-
-            yield return currentTree.Value;
+            throw new NotImplementedException();
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            GoAroundTheTree(this);
+            throw new NotImplementedException();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
