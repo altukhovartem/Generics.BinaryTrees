@@ -7,21 +7,60 @@ using System.Threading.Tasks;
 
 namespace Generics.BinaryTrees
 {
-    class BinaryTreeEnumerator<T> : IEnumerator<T> 
+     class BinaryTreeEnumerator<T> : IEnumerator<T> 
         where T : IComparable
     {
+        private BinaryTree<T> Node { get; set; }
+        private BinaryTree<T> Parent { get; set; }
         object IEnumerator.Current => Current;
-        public T Current => new BinaryTree<T>().Value;
+        public T Current { get; set; }
+
+        bool GoToLeft = true;
+        bool GoToRight = true;
 
         public BinaryTreeEnumerator(BinaryTree<T> node)
         {
             if (node == null)
                 throw new Exception();
+            this.Node = node;
         }
 
         public bool MoveNext()
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                while (GoToLeft)
+                {
+                    if (Node.Left.HasValue == true)
+                    {
+                        Parent = Node;
+                        Node = Node.Left;
+                    }
+                    else
+                        GoToLeft = false;
+                }
+                
+                if (Node.Right.HasValue == true)
+                {
+                    Parent = Node;
+                    Node = Parent.Right;
+                    GoToLeft = true;
+                }
+
+                
+                else
+                {
+                    GoToRight = false;
+                    Current = Node.Value;
+                    Node = Parent;
+                    Parent = Node.Parent;
+                    
+                    return true;
+                }
+      
+                
+                
+            }
         }
 
         public void Reset()

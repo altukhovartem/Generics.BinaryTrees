@@ -50,12 +50,12 @@ namespace Generics.BinaryTrees
         }
 
         public T Value { get; set; }
-        private bool HasValue = false;
+        public bool HasValue = false;
         public bool SuperHasValue { get { return HasValue; } set { HasValue = value; } }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new BinaryTreeEnumerator<T>(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

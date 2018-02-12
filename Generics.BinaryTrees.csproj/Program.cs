@@ -15,14 +15,12 @@ class Program
         x.Add(6);
         x.Add(7);
 
-        //foreach (var item in x)
-        //{
-        //    System.Console.WriteLine(item);
-        //}
+        foreach (var item in x)
+        {
+            System.Console.WriteLine(item);
+        }
 
-        GoAroundTheTree(x);
 
-        //BinaryTree<int> tree = BinaryTree.Create(new[] { 100,  });
 
 
 
