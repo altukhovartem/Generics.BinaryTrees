@@ -16,7 +16,7 @@ namespace Generics.BinaryTrees
         public T Current { get; set; }
 
         bool GoToLeft = true;
-        bool GoToRight = true;
+        bool GoToRight = false;
 
         public BinaryTreeEnumerator(BinaryTree<T> node)
         {
@@ -27,38 +27,54 @@ namespace Generics.BinaryTrees
 
         public bool MoveNext()
         {
+
             while (true)
             {
-                while (GoToLeft)
+                while (true)
                 {
-                    if (Node.Left.HasValue == true)
+                    if (GoToLeft == true)
                     {
-                        Parent = Node;
-                        Node = Node.Left;
+                        if (Node.Left.HasValue == true)
+                        {
+                            Parent = Node;
+                            Node = Node.Left;
+                        }
+                        else
+                        {
+                            GoToLeft = false;
+                            GoToRight = true;
+                        }
                     }
-                    else
-                        GoToLeft = false;
+                  
+                    if (GoToRight == true)
+                    {
+                        if (Node.Right.HasValue == true)
+                        {
+                            Parent = Node;
+                            Node = Node.Right;
+                            GoToLeft = true;
+                            GoToRight = false;
+                        }
+                        else
+                        {
+                            Node = Parent;
+                            Parent = Node.Parent;
+                            GoToLeft = false;
+                            GoToRight = true;
+                        }
+                    }
+                
                 }
                 
-                if (Node.Right.HasValue == true)
-                {
-                    Parent = Node;
-                    Node = Parent.Right;
-                    GoToLeft = true;
-                }
-
-                
-                else
-                {
-                    GoToRight = false;
-                    Current = Node.Value;
-                    Node = Parent;
-                    Parent = Node.Parent;
-                    
-                    return true;
-                }
-      
-                
+                //if (GoToRight == true)
+                //{
+                //    Parent = Node;
+                //    Node = Parent.Right;
+                //    GoToLeft = true;
+                //}
+                //else
+                //{
+                //    if ()
                 
             }
         }

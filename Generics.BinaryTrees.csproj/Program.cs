@@ -8,12 +8,15 @@ class Program
 	static void Main(string[] args)
 	{
         BinaryTree<int> x = new BinaryTree<int>();
-        x.Add(10);
-        x.Add(15);
+        x.Add(100);
+        x.Add(50);
         x.Add(25);
-        x.Add(8);
-        x.Add(6);
-        x.Add(7);
+        x.Add(30);
+        x.Add(27);
+        x.Add(35);
+        x.Add(150);
+        x.Add(125);
+        x.Add(175);
 
         foreach (var item in x)
         {
