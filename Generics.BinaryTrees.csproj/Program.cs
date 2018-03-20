@@ -18,29 +18,27 @@ class Program
         x.Add(125);
         x.Add(175);
 
-        foreach (var item in x)
-        {
-            System.Console.WriteLine(item);
-        }
+		foreach (var item in x)
+		{
+			System.Console.WriteLine(item);
+		}
+
+		//GoAroundTheTree(x);
 
 
+		//new AutoRun().Execute(args);
 
 
-
-
-        //new AutoRun().Execute(args);
-
-
-    }
+	}
 
     public static int GoAroundTheTree(BinaryTree<int> myTree)
     {
-        if(myTree.Left.SuperHasValue == true)
+        if(myTree.Left.HasValue == true)
         {
             GoAroundTheTree(myTree.Left);
         }
 
-        if (myTree.Right.SuperHasValue == true)
+        if (myTree.Right.HasValue == true)
         {
             GoAroundTheTree(myTree.Right);
         }

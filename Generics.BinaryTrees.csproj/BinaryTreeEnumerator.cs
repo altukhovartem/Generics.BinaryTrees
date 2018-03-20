@@ -27,64 +27,8 @@ namespace Generics.BinaryTrees
 
         public bool MoveNext()
         {
-            while (true)
-            {
-                if (GoToLeft == true)
-                {
-                    if (Node.Left.HasValue == true)
-                    {
-                        Parent = Node;
-                        Node = Node.Left;
-                    }
-                    else
-                    {
-                        GoToLeft = false;
-                        GoToRight = true;
-                    }
-                }
-              
-                if (GoToRight == true)
-                {
-                    if (Node.Right.HasValue == true)
-                    {
-                        Parent = Node;
-                        Node = Node.Right;
-                        GoToLeft = true;
-                        GoToRight = false;
-                    }
-                    else
-                    {
-                        Node = Parent.Parent.Parent;
-                        if (Node.Right.HasValue == true)
-                        {
-                            Parent = Node.Parent;
-                        }
-                        else
-                        {
-                            Node = Node.Parent;
-                            if (Node.Right.HasValue == true)
-                            {
-                                Parent = Node.Parent;
-                            }
-                        }
-                        GoToLeft = false;
-                        GoToRight = true;
-
-                    }
-
-
-                
-                }
-
-                //if (GoToRight == false && GoToLeft == false)
-                //{
-                //    Node = Parent.Parent.Parent;
-                //    Parent = Node.Parent.Parent;
-
-                //}
-            
-            }
-            return false;
+			GoAroundTheTree(Node);
+			return true;
         }
 
         public void Reset()
@@ -96,5 +40,21 @@ namespace Generics.BinaryTrees
         {
             Dispose();
         }
-    }
+
+		private static T GoAroundTheTree(BinaryTree<T> myTree)
+		{
+			if (myTree.Left.HasValue == true)
+			{
+				GoAroundTheTree(myTree.Left);
+			}
+
+			if (myTree.Right.HasValue == true)
+			{
+				GoAroundTheTree(myTree.Right);
+			}
+
+			System.Console.WriteLine(myTree.Value);
+			return myTree.Value;
+		}
+	}
 }

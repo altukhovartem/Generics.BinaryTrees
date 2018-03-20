@@ -50,8 +50,8 @@ namespace Generics.BinaryTrees
         }
 
         public T Value { get; set; }
-        public bool HasValue = false;
-        public bool SuperHasValue { get { return HasValue; } set { HasValue = value; } }
+        public bool hasValue = false;
+        public bool HasValue { get { return hasValue; } set { hasValue = value; } }
 
         public IEnumerator<T> GetEnumerator()
         {
