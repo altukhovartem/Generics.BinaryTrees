@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace Generics.BinaryTrees
 {
     public class BinaryTree<T> : IEnumerable<T>
-        where T:IComparable
+        where T:IComparable<T>
     {
         private BinaryTree<T> left;
         public BinaryTree<T> Left
@@ -50,7 +50,7 @@ namespace Generics.BinaryTrees
         }
 
         public T Value { get; set; }
-        public bool hasValue = false;
+        private bool hasValue = false;
         public bool HasValue { get { return hasValue; } set { hasValue = value; } }
 
         public IEnumerator<T> GetEnumerator()

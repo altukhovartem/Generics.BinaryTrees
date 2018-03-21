@@ -8,53 +8,77 @@ using System.Threading.Tasks;
 namespace Generics.BinaryTrees
 {
      class BinaryTreeEnumerator<T> : IEnumerator<T> 
-        where T : IComparable
+        where T : IComparable<T>
     {
-        private BinaryTree<T> Node { get; set; }
-        private BinaryTree<T> Parent { get; set; }
+        private BinaryTree<T> OriginalTree { get; set; }
+        private BinaryTree<T> CurrentNode { get; set; }
         object IEnumerator.Current => Current;
-        public T Current { get; set; }
+		public T Current => CurrentNode.Value;
 
-        bool GoToLeft = true;
-        bool GoToRight = false;
-
-        public BinaryTreeEnumerator(BinaryTree<T> node)
+		public BinaryTreeEnumerator(BinaryTree<T> node)
         {
             if (node == null)
                 throw new Exception();
-            this.Node = node;
+            this.OriginalTree = node;
+			this.CurrentNode = new BinaryTree<T>();
         }
 
         public bool MoveNext()
         {
-			GoAroundTheTree(Node);
-			return true;
-        }
+			// For the first entry, find the lowest valued node in the tree
+			if (!CurrentNode.HasValue)
+				CurrentNode = FindMostLeft(OriginalTree);
+			else
+			{
+				// Can we go right-left?
+				if (CurrentNode.Right.HasValue)
+					CurrentNode = FindMostLeft(CurrentNode.Right);
+				else
+				{
+					// Note the value we have found
+					T CurrentValue = CurrentNode.Value;
+
+					// Go up the tree until we find a value larger than the largest we have
+					// already found (or if we reach the root of the tree)
+					while (CurrentNode.HasValue)
+					{
+						CurrentNode = CurrentNode.Parent;
+						if (CurrentNode.HasValue)
+						{
+							int Compare = Current.CompareTo(CurrentValue);
+							if (Compare < 0) continue;
+						}
+						break;
+					}
+
+				}
+			}
+			return (CurrentNode != null);
+		}
 
         public void Reset()
         {
-            throw new NotImplementedException();
-        }
+            CurrentNode = new BinaryTree<T>();
+		}
 
         public void Dispose()
         {
-            Dispose();
-        }
 
-		private static T GoAroundTheTree(BinaryTree<T> myTree)
-		{
-			if (myTree.Left.HasValue == true)
+		}
+
+			BinaryTree<T> FindMostLeft(BinaryTree<T> start)
 			{
-				GoAroundTheTree(myTree.Left);
+				BinaryTree<T> node = start;
+				while (true)
+				{
+					if (node.Left.HasValue)
+					{
+						node = node.Left;
+					continue;
+					}
+					break;
 			}
-
-			if (myTree.Right.HasValue == true)
-			{
-				GoAroundTheTree(myTree.Right);
-			}
-
-			System.Console.WriteLine(myTree.Value);
-			return myTree.Value;
+			return node;
 		}
 	}
 }
