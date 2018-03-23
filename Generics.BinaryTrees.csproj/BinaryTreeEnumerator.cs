@@ -43,14 +43,13 @@ namespace Generics.BinaryTrees
 					while (CurrentNode.HasValue)
 					{
 						CurrentNode = CurrentNode.Parent;
-						if (CurrentNode.HasValue)
+						if (CurrentNode != null)
 						{
 							int Compare = Current.CompareTo(CurrentValue);
 							if (Compare < 0) continue;
 						}
 						break;
 					}
-
 				}
 			}
 			return (CurrentNode != null);

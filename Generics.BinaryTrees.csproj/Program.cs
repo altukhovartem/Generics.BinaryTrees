@@ -7,31 +7,31 @@ class Program
 {
 	static void Main(string[] args)
 	{
-        BinaryTree<int> x = new BinaryTree<int>();
-        x.Add(100);
-        x.Add(50);
-        x.Add(25);
-        x.Add(30);
-        x.Add(27);
-        x.Add(35);
-        x.Add(150);
-        x.Add(125);
-        x.Add(175);
+		BinaryTree<int> x = new BinaryTree<int>();
+		x.Add(100);
+		x.Add(50);
+		x.Add(25);
+		x.Add(30);
+		x.Add(27);
+		x.Add(35);
+		x.Add(150);
+		x.Add(125);
+		x.Add(175);
+		x.Add(27);
+
 
 		foreach (var item in x)
 		{
 			System.Console.WriteLine(item);
 		}
 
-		//GoAroundTheTree(x);
 
-
-		//new AutoRun().Execute(args);
+		new AutoRun().Execute(args);
 
 
 	}
 
-    public static int GoAroundTheTree(BinaryTree<int> myTree)
+	public static int GoAroundTheTree(BinaryTree<int> myTree)
     {
         if(myTree.Left.HasValue == true)
         {
